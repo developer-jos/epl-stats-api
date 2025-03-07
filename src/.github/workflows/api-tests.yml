@@ -1,0 +1,50 @@
+name: API Tests & Deployment
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: simple
+          POSTGRES_DB: epl_stats
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set Up Java & Python
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install Dependencies
+        run: pip install requests pytest
+
+      - name: Start Backend
+        run: |
+          nohup mvn spring-boot:run &
+          sleep 15  # Wait for backend to start
+
+      - name: Run API Tests
+        run: pytest tests/
+
+      - name: Deploy to Cloud
+        run: |
+          docker build -t epl-stats-api .
+          docker tag epl-stats-api gcr.io/YOUR_PROJECT/epl-stats-api
+          docker push gcr.io/YOUR_PROJECT/epl-stats-api

@@ -1,0 +1,81 @@
+spring:
+  datasource:
+    hikari:
+    maximum-pool-size: 30
+    url: jdbc:postgresql://localhost:5432/epl_stats
+    username: postgres
+    password: simple
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: joshuantayibu5@@gmail.com
+    password: email-passwod
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+        debug: true  # Enables mail debugging logs
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+  info:
+    title: "🏆 EPL Stats API"
+    description: "Comprehensive Premier League Player Stats API"
+    version: "1.0"
+    contact:
+      name: "Josh"
+      email: "joshua.d.programmer@gmail.com"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,loggers
+  metrics:
+    export:
+      prometheus:
+  health:
+    db:
+      enabled: true
+    diskspace:
+      enabled: true
+
+logging:
+  level:
+    root: INFO
+    org.springframework: WARN  # Suppress unnecessary Spring logs
+    com.josh.backend_solution: DEBUG  # Log your application's package at DEBUG level
+    org.hibernate.SQL: DEBUG  # Logs all SQL queries
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE  # Logs SQL query parameters
+    org.springframework.mail: DEBUG  # Debugging email sending issues
+    org.springframework.boot.autoconfigure.mail: DEBUG  # Debug Spring Boot Mail auto-config
+  file:
+    name: logs/application.log  # Save logs to a file
+    pattern:
+      console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+      file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+security:
+  oauth2:
+    resourceserver:
+      jwt:
+       issuer-uri: dev-uttljpo124lcbbk2.us.auth0.com
+       audience: http://localhost:8080

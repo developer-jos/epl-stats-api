@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epl-stats-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: epl-stats-api
+  template:
+    metadata:
+      labels:
+        app: epl-stats-api
+    spec:
+      containers:
+        - name: epl-stats-api
+          image: gcr.io/backend_solution/epl-stats-api
+          ports:
+            - containerPort: 8080

@@ -1,0 +1,19 @@
+{
+  "name": "backend-solution",
+  "version": "1.0.0",
+  "description": "The **Premier League Stats API** is a RESTful API built with **Spring Boot** and **PostgreSQL**, designed to provide comprehensive player statistics from the **English Premier League (EPL)**. It allows users to retrieve player data, filter by team, position, nationality, and various performance metrics.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "cypress": "^14.1.0"
+  }
+}
